@@ -17,6 +17,7 @@ namespace ConsoleUI
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Id=3 Gönderilmiştir.");
 
+
             foreach (var car in carManager.GetById(3))
             {
                 Console.WriteLine(car.Id + " " + car.Description);
