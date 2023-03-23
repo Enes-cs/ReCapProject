@@ -1,7 +1,8 @@
 ﻿using Business.Concrete;
 using DataAccess.Abstract;
-using DataAccess.Concrete.InMemory;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace ConsoleUI
 {
@@ -9,20 +10,20 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
-            foreach (var car in carManager.GetAll())
+            CarManager carManager = new CarManager(new EfCarDal());
+            
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Color Id=4 olan araçların Id listesi");
+            Console.WriteLine("-----------------------------------");
+
+            carManager.Add(new Car { CarName="A",DailyPrice=0});
+            
+
+            foreach (var car in carManager.GetCarsByColorId(4))
             {
-                Console.WriteLine(car.Id + " " +car.Description);
+                Console.WriteLine(car.Id);
             }
             Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Id=3 Gönderilmiştir.");
-
-
-            foreach (var car in carManager.GetById(3))
-            {
-                Console.WriteLine(car.Id + " " + car.Description);
-            }
-
 
         }
     }
