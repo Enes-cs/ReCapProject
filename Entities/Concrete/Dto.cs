@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-    public class Color:IEntity
+    public class Dto:IDto
     {
+        public int CarId { get; set; }
+        public string CarName { get; set; }
+        public int BrandId { get; set; }
+        public string BrandName { get; set; }
         public int ColorId { get; set; }
         public string ColorName { get; set; }
+        public decimal DailyPrice { get; set; }
     }
 }

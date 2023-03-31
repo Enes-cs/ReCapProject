@@ -32,9 +32,19 @@ namespace Business.Concrete
             }
         }
 
+        public void Delete(Car car)
+        {
+            _carDal.Delete(car);
+        }
+
         public List<Car> GetAll()
         {
             return _carDal.GetAll();
+        }
+
+        public List<Dto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
         }
 
         public List<Car> GetCarsByBrandId(int Id)
@@ -46,5 +56,12 @@ namespace Business.Concrete
         {
             return _carDal.GetAll(c => c.ColorId == Id);
         }
+
+        public void Update(Car car)
+        {
+            _carDal.Update(car);
+        }
+
+        
     }
 }
