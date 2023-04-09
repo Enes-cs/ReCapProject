@@ -1,9 +1,12 @@
 ﻿using Business.Concrete;
+using Business.Constants;
 using Core.DataAccess.EntityFramework;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Collections.Generic;
 using System.Threading.Channels;
 
 namespace ConsoleUI
@@ -12,15 +15,22 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //ColorManager colorManager = new ColorManager(new EfColorDal());
-            //colorManager.Add(new Color { ColorName = "Ödev" });
-            //colorManager.Delete(new Color { ColorId = 17});
 
-            CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var dondur in carManager.GetCarDetails())
-            {
-                Console.WriteLine("{0}-/-{1}-/-{2}-/-{3}",dondur.CarName,dondur.BrandName,dondur.ColorName,dondur.DailyPrice);
-            }
+            //CarManager carManager = new CarManager(new EfCarDal());
+            //var result = carManager.GetCarDetails();
+
+            //Console.WriteLine(result.Message);
+            //foreach (var dondur in carManager.GetCarDetails().Data)
+            //{
+            //    Console.WriteLine("{0}-/-{1}-/-{2}-/-{3}",dondur.CarName,dondur.BrandName,dondur.ColorName,dondur.DailyPrice);
+            //}
+
+            RentalManager rental = new RentalManager(new EfRentalDal());
+            var result = rental.Add(new Rental { 
+                CarId = 6, CustomerId = 2, UserId = 3, 
+                RentDate = new DateTime(2023, 04, 09),ReturnDate=new DateTime(2023,04,09) });
+
+            Console.WriteLine(result.Message);
 
 
             /*BrandManager brand = new BrandManager(new EfBrandDal());
@@ -33,19 +43,23 @@ namespace ConsoleUI
             {
                 Console.WriteLine(item.BrandName);
             }
-            /*brand.Update(new Brand { BrandId = 29,BrandName="Ödev",ModelName="Odevv" });
-            /*brand.Delete(new Brand { BrandId = 30 });
-            /*brand.Add(new Brand { BrandName = "BuBariOlsn", ModelName = "Ödev" });
+            //brand.Update(new Brand { BrandId = 29, BrandName = "Ödev", ModelName = "Odevv" });
+            //brand.Delete(new Brand { BrandId = 30 });
+            //brand.Add(new Brand { BrandName = "BuBariOlsn", ModelName = "Ödev" });*/
 
 
 
-            /*CarManager carManager = new CarManager(new EfCarDal());
-            carManager.Add(new Car { CarName = "KaydetArtık", DailyPrice = 99 });
+            //CarManager carManager = new CarManager(new EfCarDal());
+            //carManager.Add(new Car
+            //{
+            //    CarId = 47, CarName="MustafaÇELİK"
+            //});
 
-            foreach (var cars in carManager.GetAll())
-            {
-                Console.WriteLine(cars.CarName);
-            } */
+
+            //foreach (var cars in carManager.GetAll().Data)
+            //{
+            //    Console.WriteLine(cars.CarId+""+cars.CarName);
+            //} 
         }
     }
 }

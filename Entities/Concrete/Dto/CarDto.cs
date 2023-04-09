@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Concrete
+namespace Entities.Concrete.Dto
 {
-    public class Dto:IDto
+    public class CarDto : IDto
     {
         public int CarId { get; set; }
         public string CarName { get; set; }

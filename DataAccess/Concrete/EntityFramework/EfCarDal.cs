@@ -1,6 +1,7 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Concrete.Dto;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
    
 
-        public List<Dto> GetCarDetails()
+        public List<CarDto> GetCarDetails()
         {
             using (ReCapDbContext context = new ReCapDbContext())
             {
@@ -24,7 +25,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.BrandId equals b.BrandId
                              join co in context.Colors
                              on c.ColorId equals co.ColorId
-                             select new Dto { CarId = c.Id, CarName = c.CarName, BrandName = b.BrandName, ColorName = co.ColorName, DailyPrice = c.DailyPrice };
+                             select new CarDto { CarId = c.CarId, CarName = c.CarName, BrandName = b.BrandName, ColorName = co.ColorName, DailyPrice = c.DailyPrice };
                 return result.ToList();
             }
         }
