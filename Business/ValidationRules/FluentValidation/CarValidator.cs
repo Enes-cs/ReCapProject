@@ -12,7 +12,8 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CarValidator()
         {
-            //Car Rules
+            RuleFor(c=>c.CarName).MinimumLength(2);
+            RuleFor(c=>c.DailyPrice).GreaterThan(0);
         }
     }
 }
