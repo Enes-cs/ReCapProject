@@ -1,9 +1,11 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Concrete.Dto;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +25,17 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
-                _carDal.Add(car);
-                return new SuccessResult(Messages.CarAdded);
+            var context = new ValidationContext<Car>(car);
+            CarValidator carvalidator = new CarValidator();
+            var result = carvalidator.Validate(context);
+
+            if (!result.IsValid)
+            {
+                throw new ValidationException(result.Errors);
+            }
+
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
@@ -41,7 +52,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarListed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarListed);
         }
 
         public IDataResult<List<CarDto>> GetCarDetails()
@@ -51,12 +62,12 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetById(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=> c.CarId == id), Messages.CarShow);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.CarId == id), Messages.CarShow);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int Id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == Id),(Messages.BrandShow));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == Id), (Messages.BrandShow));
         }
 
         public IDataResult<List<Car>> GetCarsByColorId(int Id)
